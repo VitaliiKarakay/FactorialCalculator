@@ -6,13 +6,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class FactorialCalculator implements NumberProcessor {
-    private final int N;
+    private final int threadsCount;
     private final ExecutorService executorService;
     private final ResultProcessor resultProcessor;
 
-    public FactorialCalculator(int n, ResultProcessor resultProcessor) {
-        N = n;
-        this.executorService = Executors.newFixedThreadPool(N);
+    public FactorialCalculator(int threadsCount, ResultProcessor resultProcessor) {
+        this.threadsCount = threadsCount;
+        this.executorService = Executors.newFixedThreadPool(this.threadsCount);
         this.resultProcessor = resultProcessor;
     }
 
@@ -29,7 +29,7 @@ public class FactorialCalculator implements NumberProcessor {
             resultProcessor.processResult(result);
         });
         try {
-            Thread.sleep(1000 / N);
+            Thread.sleep(1000 / threadsCount);
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
