@@ -12,11 +12,11 @@ public class FileWriter implements ResultProcessor {
 
     @Override
     public void processResult(String result) {
-        try (BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(filename))) {
-            writer.write(result);
-            writer.newLine();
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new java.io.FileWriter(filename))) {
+            bufferedWriter.write(result);
+            bufferedWriter.newLine();
         } catch (IOException exception){
             exception.printStackTrace();
-        };
+        }
     }
 }

@@ -17,8 +17,8 @@ public class FactorialCalculator implements NumberProcessor {
     }
 
     @Override
-    public void processNumber(int number) {
-        if (number == -1) {
+    public void processNumber(String number) {
+        if (number.equals("END")) {
             executorService.shutdown();
             return;
         }
@@ -35,9 +35,10 @@ public class FactorialCalculator implements NumberProcessor {
         }
     }
 
-    private BigInteger calculateFactorial(int number) {
+    private BigInteger calculateFactorial(String number) {
         BigInteger factorial = BigInteger.ONE;
-        for (int i = 2; i <= number; i++) {
+        int num = Integer.parseInt(number);
+        for (int i = 2; i <= num; i++) {
             factorial = factorial.multiply(BigInteger.valueOf(i));
         }
         return factorial;

@@ -18,12 +18,11 @@ public class FileReaderThread implements Runnable{
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                int number = Integer.parseInt(line);
-                numberProcessor.processNumber(number);
+                numberProcessor.processNumber(line);
             }
         } catch (IOException | NumberFormatException exception ) {
             exception.printStackTrace();
         }
-        numberProcessor.processNumber(-1);
+        numberProcessor.processNumber("END");
     }
 }
