@@ -1,5 +1,5 @@
 import processors.FactorialCalculator;
-import processors.FileWriter;
+import processors.FileWriterThread;
 import processors.NumberProcessor;
 import processors.ResultProcessor;
 
@@ -9,7 +9,7 @@ public class FactorialCalculatorApp {
         final String INPUT = "input.txt";
         final String OUTPUT = "output.txt";
 
-        ResultProcessor resultProcessor = new FileWriter(OUTPUT);
+        ResultProcessor resultProcessor = new FileWriterThread(OUTPUT);
         NumberProcessor factorialCalculator = new FactorialCalculator(N,  resultProcessor);
         Thread readerThread = new Thread(new FileReaderThread(INPUT, factorialCalculator));
 
