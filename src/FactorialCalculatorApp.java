@@ -5,7 +5,7 @@ import processors.ResultProcessor;
 
 public class FactorialCalculatorApp {
     public static void main(String[] args) {
-        final int N = 5;
+        final int N = 1000;
         final String INPUT = "input.txt";
         final String OUTPUT = "output.txt";
 

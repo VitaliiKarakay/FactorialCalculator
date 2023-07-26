@@ -25,7 +25,7 @@ public class FactorialCalculator implements NumberProcessor {
 
         CompletableFuture<BigInteger> futureFactorial = CompletableFuture.supplyAsync(() -> calculateFactorial(number), executorService);
         futureFactorial.thenAccept(factorial -> {
-            String result = number + " = " + factorial.toString();
+            String result = number.trim() + " = " + factorial.toString();
             resultProcessor.processResult(result);
         });
         try {
@@ -37,7 +37,7 @@ public class FactorialCalculator implements NumberProcessor {
 
     private BigInteger calculateFactorial(String number) {
         BigInteger factorial = BigInteger.ONE;
-        int num = Integer.parseInt(number);
+        int num = Integer.parseInt(number.trim());
         for (int i = 2; i <= num; i++) {
             factorial = factorial.multiply(BigInteger.valueOf(i));
         }
