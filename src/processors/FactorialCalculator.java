@@ -25,9 +25,8 @@ public class FactorialCalculator implements NumberProcessor {
 
         CompletableFuture.supplyAsync(() -> calculateFactorial(number), executorService)
                 .thenAccept(factorial -> {
-                    String result = number.trim() + " = " + factorial.toString();
+                    String result = number.trim() + " = " + factorial;
                     resultProcessor.processResult(result);
-
                 })
                 .exceptionally(ex -> {
                     ex.printStackTrace();
