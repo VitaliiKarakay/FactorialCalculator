@@ -6,14 +6,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class FactorialCalculator implements NumberProcessor {
-    private final int threadsCount;
     private final ExecutorService executorService;
     private final ResultProcessor resultProcessor;
+    private final int maxNumbersPerSecond;
 
-    public FactorialCalculator(int threadsCount, ResultProcessor resultProcessor) {
-        this.threadsCount = threadsCount;
-        this.executorService = Executors.newFixedThreadPool(this.threadsCount);
+    public FactorialCalculator(int maxNumbersPerSecond, ResultProcessor resultProcessor) {
+        this.executorService = Executors.newFixedThreadPool(maxNumbersPerSecond);
         this.resultProcessor = resultProcessor;
+        this.maxNumbersPerSecond = maxNumbersPerSecond;
     }
 
     @Override
@@ -23,13 +23,19 @@ public class FactorialCalculator implements NumberProcessor {
             return;
         }
 
-        CompletableFuture<BigInteger> futureFactorial = CompletableFuture.supplyAsync(() -> calculateFactorial(number), executorService);
-        futureFactorial.thenAccept(factorial -> {
-            String result = number.trim() + " = " + factorial.toString();
-            resultProcessor.processResult(result);
-        });
+        CompletableFuture.supplyAsync(() -> calculateFactorial(number), executorService)
+                .thenAccept(factorial -> {
+                    String result = number.trim() + " = " + factorial.toString();
+                    resultProcessor.processResult(result);
+
+                })
+                .exceptionally(ex -> {
+                    ex.printStackTrace();
+                    return null;
+                });
         try {
-            Thread.sleep(1000 / threadsCount);
+            int delay = 1000 / maxNumbersPerSecond;
+            Thread.sleep(delay);
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
