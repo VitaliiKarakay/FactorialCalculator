@@ -5,12 +5,12 @@ import processors.ResultProcessor;
 
 public class FactorialCalculatorApp {
     public static void main(String[] args) {
-        final int maxNumbersPerSecond = 100;
+        final int maxThreads = 100;
         final String INPUT = "input.txt";
         final String OUTPUT = "output.txt";
 
         ResultProcessor resultProcessor = new FileWriterThread(OUTPUT);
-        NumberProcessor factorialCalculator = new FactorialCalculator(maxNumbersPerSecond,  resultProcessor);
+        NumberProcessor factorialCalculator = new FactorialCalculator(maxThreads,  resultProcessor);
         Thread readerThread = new Thread(new FileReaderThread(INPUT, factorialCalculator));
 
         readerThread.start();
