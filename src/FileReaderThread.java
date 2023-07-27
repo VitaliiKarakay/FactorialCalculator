@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileReaderThread implements Runnable{
+public class FileReaderThread implements Runnable {
     private final String filename;
     private final NumberProcessor numberProcessor;
 
@@ -18,14 +18,9 @@ public class FileReaderThread implements Runnable{
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                try {
-                    int number = Integer.parseInt(line);
-                    numberProcessor.processNumber(line);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                numberProcessor.processNumber(line);
             }
-        } catch (IOException | NumberFormatException exception ) {
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
         numberProcessor.processNumber("END");
